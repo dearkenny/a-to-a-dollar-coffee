@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A to A dollar coffee — Design System Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e14;
+            --bg-secondary: #151b24;
+            --bg-tertiary: #1f2937;
+            --text-primary: #e5e9f0;
+            --text-secondary: #a8b5c7;
+            --accent: #d4a574;
+            --accent-hover: #e8c4a0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #f87171;
+            --info: #3b82f6;
+            --border: #2d3748;
+        }
+
+        body {
+            font-family: 'Lora', Georgia, serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .mode-toggle {
+            font-family: 'JetBrains Mono', monospace;
+            padding: 0.5rem 1rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .mode-toggle:hover {
+            background-color: var(--bg-tertiary);
+            border-color: var(--accent);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 3rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            color: var(--text-primary);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        /* Typography section */
+        .font-specimen {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 6px;
+        }
+
+        .font-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .specimen-display {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .specimen-body {
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .specimen-ui {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--bg-tertiary);
+            border-radius: 4px;
+        }
+
+        /* Color section */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .color-swatch {
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .swatch-color {
+            width: 100%;
+            height: 120px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 0.5rem;
+        }
+
+        .swatch-info {
+            padding: 1rem;
+            background-color: var(--bg-secondary);
+        }
+
+        .color-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .color-hex {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Components section */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .component-box {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 6px;
+        }
+
+        .component-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: 2px solid;
+            transition: all 0.2s;
+            margin-bottom: 0.5rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(212, 165, 116, 0.1);
+        }
+
+        .btn-ghost {
+            background-color: transparent;
+            color: var(--text-secondary);
+            border-color: var(--border);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+            border-color: var(--text-secondary);
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 4px;
+            font-family: 'Lora', Georgia, serif;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(212, 165, 116, 0.1);
+        }
+
+        /* Alert boxes */
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left-color: var(--success);
+            color: var(--success);
+        }
+
+        .alert-warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .alert-error {
+            background-color: rgba(248, 113, 113, 0.1);
+            border-left-color: var(--error);
+            color: var(--error);
+        }
+
+        .alert-info {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left-color: var(--info);
+            color: var(--info);
+        }
+
+        /* Hero mockup */
+        .hero-mockup {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 4rem 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .hero-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            background-color: var(--bg-tertiary);
+            color: var(--text-secondary);
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .data-table tbody tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        /* Light mode */
+        body.light-mode {
+            --bg-primary: #fafbfc;
+            --bg-secondary: #f0f3f9;
+            --bg-tertiary: #e6ecf5;
+            --text-primary: #1a1f2e;
+            --text-secondary: #5a6b7a;
+            --border: #d1dce6;
+        }
+
+        .light-mode .mode-toggle {
+            background-color: var(--bg-secondary);
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            margin-top: 4rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">₳₳ a2a-design</div>
+        <button class="mode-toggle" onclick="toggleMode()">Light Mode</button>
+    </header>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <h1>A to A dollar coffee</h1>
+        <div class="tagline">Design System Preview</div>
+
+        <!-- Typography -->
+        <section class="section">
+            <h2>Typography</h2>
+            <p>The Elegant Monospace system uses three complementary typefaces to create hierarchy with personality.</p>
+
+            <div class="font-specimen">
+                <div class="font-name">Display: Space Mono (Bold)</div>
+                <div class="specimen-display">Protocol & Vision</div>
+                <p style="margin: 1rem 0 0; font-size: 0.9rem; color: var(--text-secondary);">Headlines, data labels, and strategic statements. Geometric mono conveys precision and technical credibility.</p>
+            </div>
+
+            <div class="font-specimen">
+                <div class="font-name">Body: Lora (Regular)</div>
+                <div class="specimen-body">
+                    A2A is an experimental framework for machine-to-machine value transfer. Agents negotiate autonomously, settle through x402 payments, and complete tasks without human intermediaries. Serif body text adds warmth and readability to longer passages, balancing the technical rigor of monospace headlines.
+                </div>
+            </div>
+
+            <div class="font-specimen">
+                <div class="font-name">UI/Code: JetBrains Mono</div>
+                <div class="specimen-ui">$ agent_pay --amount 0.50 --target agent-b</div>
+                <p style="margin: 1rem 0 0; font-size: 0.9rem; color: var(--text-secondary);">Button labels, form inputs, code snippets, and compact data. Clean monospace designed for small sizes.</p>
+            </div>
+        </section>
+
+        <!-- Color Palette -->
+        <section class="section">
+            <h2>Color Palette</h2>
+            <p>A warm, refined palette that stands apart from the purple-blue convergence in crypto. Gold accent signals precision and scarcity.</p>
+
+            <div class="color-grid">
+                <div class="color-swatch" style="background-color: var(--bg-primary);">
+                    <div class="swatch-color" style="background-color: var(--bg-primary); color: var(--text-primary);">#0a0e14</div>
+                    <div class="swatch-info">
+                        <div class="color-name">Primary Dark</div>
+                        <div class="color-hex">#0a0e14</div>
+                    </div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="swatch-color" style="background-color: var(--accent); color: var(--bg-primary);">#d4a574</div>
+                    <div class="swatch-info">
+                        <div class="color-name">Accent (Gold)</div>
+                        <div class="color-hex">#d4a574</div>
+                    </div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="swatch-color" style="background-color: var(--text-primary); color: var(--bg-primary);">#e5e9f0</div>
+                    <div class="swatch-info">
+                        <div class="color-name">Text Primary</div>
+                        <div class="color-hex">#e5e9f0</div>
+                    </div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="swatch-color" style="background-color: var(--success); color: white;">✓</div>
+                    <div class="swatch-info">
+                        <div class="color-name">Success</div>
+                        <div class="color-hex">#10b981</div>
+                    </div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="swatch-color" style="background-color: var(--warning); color: white);">!</div>
+                    <div class="swatch-info">
+                        <div class="color-name">Warning</div>
+                        <div class="color-hex">#f59e0b</div>
+                    </div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="swatch-color" style="background-color: var(--error); color: white;">✕</div>
+                    <div class="swatch-info">
+                        <div class="color-name">Error</div>
+                        <div class="color-hex">#f87171</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Components -->
+        <section class="section">
+            <h2>Components</h2>
+
+            <div class="component-grid">
+                <div class="component-box">
+                    <div class="component-title">Buttons</div>
+                    <button class="btn btn-primary">Primary Action</button>
+                    <button class="btn btn-secondary">Secondary Action</button>
+                    <button class="btn btn-ghost">Ghost Button</button>
+                </div>
+
+                <div class="component-box">
+                    <div class="component-title">Form Inputs</div>
+                    <div class="input-group">
+                        <label class="label">Email</label>
+                        <input type="text" placeholder="agent@protocol.ai">
+                    </div>
+                    <div class="input-group">
+                        <label class="label">Amount (USDC)</label>
+                        <input type="text" placeholder="0.50">
+                    </div>
+                </div>
+
+                <div class="component-box">
+                    <div class="component-title">Alerts</div>
+                    <div class="alert alert-success">Payment settled. ✓</div>
+                    <div class="alert alert-info">3 pending tasks</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Mockup -->
+        <section class="section">
+            <h2>Hero Section Mockup</h2>
+            <div class="hero-mockup">
+                <div class="hero-title">A to A dollar coffee</div>
+                <div class="hero-subtitle">Agent-to-Agent Economy</div>
+                <div class="hero-description">
+                    An experimental framework for autonomous agents to negotiate, pay, and settle value transfer through the x402 protocol on Base blockchain.
+                </div>
+                <button class="btn btn-primary" style="width: auto; margin: 0 auto 0.5rem;">View on GitHub</button>
+                <button class="btn btn-secondary" style="width: auto;">Read Research</button>
+            </div>
+        </section>
+
+        <!-- Data Table Mockup -->
+        <section class="section">
+            <h2>Data & Tables</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Agent</th>
+                        <th>Status</th>
+                        <th>USDC Settled</th>
+                        <th>Task</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>agent-analyzer-01</td>
+                        <td style="color: var(--success);">✓ Active</td>
+                        <td>$ 2,450.75</td>
+                        <td>Data Processing</td>
+                    </tr>
+                    <tr>
+                        <td>agent-validator-02</td>
+                        <td style="color: var(--success);">✓ Active</td>
+                        <td>$ 1,200.00</td>
+                        <td>Proof Verification</td>
+                    </tr>
+                    <tr>
+                        <td>agent-executor-03</td>
+                        <td style="color: var(--info);">⧗ Pending</td>
+                        <td>$ 0.00</td>
+                        <td>Task Settlement</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Foundation -->
+        <section class="section">
+            <h2>Design Foundation</h2>
+            <h3>Spacing</h3>
+            <p>8px base unit. Comfortable density with breathing room. Spacing scale: xs(4) sm(8) md(16) lg(24) xl(32) 2xl(48)</p>
+
+            <h3>Border Radius</h3>
+            <p>Subtle: sm(2px) md(4px) lg(6px). Sharp edges preserve geek aesthetic without harshness.</p>
+
+            <h3>Layout</h3>
+            <p>Editorial grid with asymmetry. 12-column on desktop, flexible on mobile. Max content width: 1200px</p>
+
+            <h3>Motion</h3>
+            <p>Minimal-functional only. Transitions aid comprehension: 150ms ease-in-out. No gratuitous animations.</p>
+        </section>
+
+        <footer>
+            <p>Design System © 2024 A to A dollar coffee. Elegant Monospace — Refined Geek Aesthetic.</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleMode() {
+            document.body.classList.toggle('light-mode');
+            const btn = document.querySelector('.mode-toggle');
+            btn.textContent = document.body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
+        }
+    </script>
+</body>
+</html>
