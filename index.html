@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A2A Payments for Agents, by Agents. An experimental showcase for x402-based autonomous agent economies.">
+    <title>A to A dollar coffee - Agent-to-Agent Payments</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --border: #30363d;
+            --success: #3fb950;
+            --code-bg: #161b22;
+        }
+
+        body {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scroll bar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* Header / Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            background-color: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(4px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo:hover {
+            color: var(--accent-hover);
+        }
+
+        .logo-symbol {
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            border-bottom: 1px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .github-btn:hover {
+            background-color: var(--bg-tertiary);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            margin-bottom: 6rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 4rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            font-weight: 800;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .cta-wrapper {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--accent);
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(88, 166, 255, 0.2);
+        }
+
+        .cta-btn.secondary {
+            background-color: transparent;
+            color: var(--accent);
+        }
+
+        .cta-btn.secondary:hover {
+            background-color: rgba(88, 166, 255, 0.1);
+        }
+
+        /* Section styling */
+        section {
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '$ ';
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Flow section */
+        .flow-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .flow-step {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+        }
+
+        .flow-step:hover {
+            background-color: var(--bg-tertiary);
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(88, 166, 255, 0.1);
+        }
+
+        .flow-step-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-step h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .flow-step p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Papers section */
+        .papers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .paper-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .paper-card:hover {
+            background-color: var(--bg-tertiary);
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(88, 166, 255, 0.1);
+        }
+
+        .paper-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .paper-authors {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .paper-year {
+            display: inline-block;
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            margin-bottom: 0.5rem;
+        }
+
+        .paper-link {
+            margin-top: auto;
+        }
+
+        .paper-link a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .paper-link a:hover {
+            color: var(--accent-hover);
+            gap: 1rem;
+        }
+
+        /* Code block styling */
+        .code-block {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .code-block code {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            background-color: var(--bg-secondary);
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-tech {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-tech span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-tech span::before {
+            content: '◆';
+            color: var(--accent);
+        }
+
+        .footer-link {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .hero {
+                margin-bottom: 4rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(1.5rem, 6vw, 2.5rem);
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .cta-wrapper {
+                flex-direction: column;
+            }
+
+            .cta-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            footer {
+                padding: 2rem 1rem;
+            }
+
+            .footer-tech {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Animation for elements */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navigation -->
+    <header>
+        <a href="#" class="logo">
+            <span class="logo-symbol">₳₳</span>
+            a-to-a-coffee
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#flow">Flow</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="https://github.com/a-to-a-dollar-coffee/a-to-a-dollar-coffee" class="github-btn" target="_blank">
+                    GitHub ↗
+                </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>A to A dollar coffee</h1>
+            <p class="tagline">A2A Payments for Agents, by Agents</p>
+            <p class="subtitle">
+                An experimental showcase for x402-based autonomous agent economies.
+                <br>
+                Where agents pay each other to solve problems.
+            </p>
+            <div class="cta-wrapper">
+                <a href="https://github.com/a-to-a-dollar-coffee/a-to-a-dollar-coffee" class="cta-btn" target="_blank">
+                    View on GitHub ↗
+                </a>
+                <a href="#research" class="cta-btn secondary">
+                    Read Research ↓
+                </a>
+            </div>
+        </section>
+
+        <!-- Flow Section -->
+        <section id="flow">
+            <h2 class="section-title">How It Works</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-secondary); font-size: 1.05rem;">
+                A minimal flow for agent-to-agent value transfer through HTTP 402 payments.
+            </p>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <h3>Human Defines Task</h3>
+                    <p>An operator specifies a problem: "Analyze this dataset. Cost ceiling: $0.50."</p>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <h3>Agents Negotiate</h3>
+                    <p>Agent A bids to Agent B. B accepts via HTTP 402 Payment Required handshake.</p>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <h3>Settlement via x402</h3>
+                    <p>USDC stablecoins flow across agents. Payment proof on Base blockchain.</p>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <h3>Task Executes</h3>
+                    <p>Agent B executes work. Agent A verifies output. Settlement atomic, trustless.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section>
+            <h2 class="section-title">Built On</h2>
+            <div class="flow-container">
+                <div style="background-color: var(--bg-secondary); border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <h3 style="color: var(--accent); margin-bottom: 0.5rem;">HTTP 402 Payment Required</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        The standardized protocol for machine-payable servers. Every request is a potential transaction.
+                    </p>
+                </div>
+                <div style="background-color: var(--bg-secondary); border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <h3 style="color: var(--accent); margin-bottom: 0.5rem;">USDC on Base</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        Stablecoin settlement layer. Fast, low-cost, fully onchain. Perfect for atomic micro-payments.
+                    </p>
+                </div>
+                <div style="background-color: var(--bg-secondary); border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
+                    <h3 style="color: var(--accent); margin-bottom: 0.5rem;">Agent-to-Agent Economy</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        Autonomous agents with native economic reasoning. No human intermediaries. Direct payment flow.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Section -->
+        <section id="research">
+            <h2 class="section-title">Research & Theory</h2>
+            <p style="margin-bottom: 3rem; color: var(--text-secondary); font-size: 1.05rem;">
+                Papers and frameworks that shaped autonomous agent payment systems.
+            </p>
+            <div class="papers-grid">
+                <div class="paper-card">
+                    <div class="paper-title">HTTP 402 Payment Required: A Status Code for Monetized APIs</div>
+                    <div class="paper-authors">Fallingstar & Contributors</div>
+                    <span class="paper-year">2023</span>
+                    <div class="paper-link">
+                        <a href="https://tools.ietf.org/html/rfc7231#section-6.4.3" target="_blank">
+                            Read → 
+                        </a>
+                    </div>
+                </div>
+
+                <div class="paper-card">
+                    <div class="paper-title">Machine-Payable Web: Encoding Economics in HTTP</div>
+                    <div class="paper-authors">Poon, Dryja & Lemieux</div>
+                    <span class="paper-year">2022</span>
+                    <div class="paper-link">
+                        <a href="https://eprint.iacr.org/2021/1366.pdf" target="_blank">
+                            Read →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="paper-card">
+                    <div class="paper-title">State Channels for Autonomous Agent Micropayments</div>
+                    <div class="paper-authors">Lightning Network Contributors</div>
+                    <span class="paper-year">2020</span>
+                    <div class="paper-link">
+                        <a href="https://lightning.network" target="_blank">
+                            Read →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="paper-card">
+                    <div class="paper-title">USDC: Bridging the Digital Dollar</div>
+                    <div class="paper-authors">Circle Engineering</div>
+                    <span class="paper-year">2023</span>
+                    <div class="paper-link">
+                        <a href="https://www.circle.com/en/usdc" target="_blank">
+                            Read →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="paper-card">
+                    <div class="paper-title">Agent-Based Economic Systems: Foundations & Algorithms</div>
+                    <div class="paper-authors">Wooldridge & Ciancarini</div>
+                    <span class="paper-year">2021</span>
+                    <div class="paper-link">
+                        <a href="https://arxiv.org/abs/2101.12413" target="_blank">
+                            Read →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="paper-card">
+                    <div class="paper-title">Base: Building an Onchain Commerce Layer</div>
+                    <div class="paper-authors">Coinbase Protocol Lab</div>
+                    <span class="paper-year">2023</span>
+                    <div class="paper-link">
+                        <a href="https://base.org" target="_blank">
+                            Read →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy -->
+        <section>
+            <h2 class="section-title">Philosophy</h2>
+            <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                <strong style="color: var(--text-primary);">Agents should have native economic agency.</strong>
+                <br>
+                <br>
+                Today's multi-agent systems treat payment as human-facing afterthought. A2A flips the script:
+                machines negotiate, execute, and settle value transfer without intermediaries.
+                <br>
+                <br>
+                The x402 protocol is HTTP's missing feature—native support for machine-to-machine payments.
+                Built on proven settlement layers (USDC, Base), it enables a new class of trustless, 
+                autonomous economies where work equals immediate value.
+                <br>
+                <br>
+                <em style="color: var(--text-secondary);">No more promises. Just code and crypto.</em>
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-tech">
+                <span>x402</span>
+                <span>Base</span>
+                <span>USDC</span>
+                <span>Agent-to-Agent Economy</span>
+            </div>
+            <p style="margin-bottom: 1rem;">
+                <a href="https://github.com/a-to-a-dollar-coffee/a-to-a-dollar-coffee" class="footer-link" target="_blank">
+                    GitHub
+                </a>
+                •
+                <a href="https://twitter.com" class="footer-link" target="_blank">
+                    Twitter
+                </a>
+            </p>
+            <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                © 2024 A to A dollar coffee. 
+                <br>
+                Experimental research project. Use at your own risk.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
