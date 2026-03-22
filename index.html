@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A2A Payments for Agents, by Agents. An experimental showcase for x402-based autonomous agent economies.">
     <title>A to A dollar coffee - Agent-to-Agent Payments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,27 +14,40 @@
         }
 
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --text-primary: #c9d1d9;
-            --text-secondary: #8b949e;
-            --accent: #58a6ff;
-            --accent-hover: #79c0ff;
-            --border: #30363d;
-            --success: #3fb950;
-            --code-bg: #161b22;
+            --bg-primary: #0a0e14;
+            --bg-secondary: #151b24;
+            --bg-tertiary: #1f2937;
+            --text-primary: #e5e9f0;
+            --text-secondary: #a8b5c7;
+            --accent: #d4a574;
+            --accent-hover: #e8c4a0;
+            --border: #2d3748;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #f87171;
+            --info: #3b82f6;
+        }
+
+        @media (prefers-color-scheme: light) {
+            body:not(.dark-mode) {
+                --bg-primary: #fafbfc;
+                --bg-secondary: #f0f3f9;
+                --bg-tertiary: #e6ecf5;
+                --text-primary: #1a1f2e;
+                --text-secondary: #5a6b7a;
+                --border: #d1dce6;
+            }
         }
 
         body {
-            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-family: 'Lora', Georgia, serif;
             background-color: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.8;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Scroll bar styling */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -49,25 +63,25 @@
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-secondary);
+            background: var(--accent);
         }
 
-        /* Header / Navigation */
+        /* Header */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 2rem;
             border-bottom: 1px solid var(--border);
-            background-color: rgba(13, 17, 23, 0.8);
-            backdrop-filter: blur(4px);
+            background-color: var(--bg-primary);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
         .logo {
-            font-size: 1.25rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.125rem;
             font-weight: 700;
             letter-spacing: 0.05em;
             color: var(--accent);
@@ -75,6 +89,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: color 150ms ease-out;
         }
 
         .logo:hover {
@@ -82,7 +97,7 @@
         }
 
         .logo-symbol {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
 
         .nav-links {
@@ -93,14 +108,23 @@
         }
 
         .nav-links a {
+            font-family: 'JetBrains Mono', monospace;
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-            border-bottom: 1px solid transparent;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 150ms ease-out;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
         }
 
         .nav-links a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .nav-links a:focus {
+            outline: none;
             color: var(--accent);
             border-bottom-color: var(--accent);
         }
@@ -109,15 +133,16 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
+            padding: 0.625rem 1rem;
             background-color: var(--bg-secondary);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            border-radius: 6px;
+            border-radius: 4px;
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 150ms ease-out;
             cursor: pointer;
         }
 
@@ -126,6 +151,12 @@
             border-color: var(--accent);
             color: var(--accent);
             transform: translateY(-2px);
+        }
+
+        .github-btn:focus {
+            outline: none;
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         /* Main content */
@@ -139,43 +170,37 @@
         .hero {
             text-align: center;
             margin-bottom: 6rem;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .hero h1 {
-            font-size: clamp(2rem, 8vw, 4rem);
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(2rem, 8vw, 2.5rem);
+            font-weight: 700;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--accent);
             letter-spacing: -0.02em;
-            font-weight: 800;
+            line-height: 1.2;
         }
 
         .tagline {
-            font-size: 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
             color: var(--accent);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.125rem;
             color: var(--text-secondary);
             margin-bottom: 2rem;
             line-height: 1.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cta-wrapper {
@@ -186,27 +211,33 @@
         }
 
         .cta-btn {
-            padding: 0.75rem 1.5rem;
-            border: 2px solid var(--accent);
+            padding: 0.875rem 1.5rem;
+            border: 2px solid;
             background-color: var(--accent);
             color: var(--bg-primary);
-            border-radius: 6px;
+            border-radius: 4px;
             text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
-            font-size: 1rem;
-            font-family: inherit;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 150ms ease-out;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            border-color: var(--accent);
         }
 
         .cta-btn:hover {
             background-color: var(--accent-hover);
             border-color: var(--accent-hover);
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(88, 166, 255, 0.2);
+            box-shadow: 0 8px 16px rgba(212, 165, 116, 0.15);
+        }
+
+        .cta-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent);
         }
 
         .cta-btn.secondary {
@@ -215,44 +246,55 @@
         }
 
         .cta-btn.secondary:hover {
-            background-color: rgba(88, 166, 255, 0.1);
+            background-color: rgba(212, 165, 116, 0.1);
         }
 
-        /* Section styling */
+        /* Sections */
         section {
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
         }
 
         .section-title {
-            font-size: 2rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
             border-bottom: 2px solid var(--border);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            letter-spacing: 0.05em;
         }
 
         .section-title::before {
-            content: '$ ';
+            content: '$';
             color: var(--accent);
             font-weight: 700;
         }
 
-        /* Flow section */
+        .section-description {
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        /* Flow container */
         .flow-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         .flow-step {
             background-color: var(--bg-secondary);
             border: 1px solid var(--border);
             padding: 2rem;
-            border-radius: 8px;
-            transition: all 0.3s;
+            border-radius: 6px;
+            transition: all 150ms ease-out;
             position: relative;
             overflow: hidden;
         }
@@ -271,28 +313,72 @@
             background-color: var(--bg-tertiary);
             border-color: var(--accent);
             transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(88, 166, 255, 0.1);
+            box-shadow: 0 8px 16px rgba(212, 165, 116, 0.1);
         }
 
         .flow-step-number {
+            font-family: 'Space Mono', monospace;
             font-size: 2.5rem;
             font-weight: 700;
             color: var(--accent);
             margin-bottom: 0.5rem;
+            line-height: 1;
         }
 
         .flow-step h3 {
+            font-family: 'Space Mono', monospace;
             font-size: 1.2rem;
+            font-weight: 700;
             margin-bottom: 1rem;
             color: var(--text-primary);
+            letter-spacing: 0.05em;
         }
 
         .flow-step p {
+            font-family: 'Lora', Georgia, serif;
             color: var(--text-secondary);
             line-height: 1.8;
+            font-size: 0.95rem;
         }
 
-        /* Papers section */
+        /* Tech cards */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .tech-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 6px;
+            transition: all 150ms ease-out;
+        }
+
+        .tech-card:hover {
+            background-color: var(--bg-tertiary);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .tech-card h3 {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .tech-card p {
+            font-family: 'Lora', Georgia, serif;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* Papers grid */
         .papers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -303,8 +389,8 @@
             background-color: var(--bg-secondary);
             border: 1px solid var(--border);
             padding: 1.5rem;
-            border-radius: 8px;
-            transition: all 0.3s;
+            border-radius: 6px;
+            transition: all 150ms ease-out;
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -314,21 +400,25 @@
             background-color: var(--bg-tertiary);
             border-color: var(--accent);
             transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(88, 166, 255, 0.1);
+            box-shadow: 0 8px 16px rgba(212, 165, 116, 0.1);
         }
 
         .paper-title {
-            font-size: 1rem;
-            font-weight: 600;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
             color: var(--accent);
             margin-bottom: 0.5rem;
-            line-height: 1.5;
+            line-height: 1.4;
+            letter-spacing: 0.01em;
         }
 
         .paper-authors {
-            font-size: 0.9rem;
+            font-family: 'Lora', Georgia, serif;
+            font-size: 0.85rem;
             color: var(--text-secondary);
             margin-bottom: 0.5rem;
+            font-style: italic;
         }
 
         .paper-year {
@@ -336,8 +426,9 @@
             background-color: var(--bg-primary);
             color: var(--text-secondary);
             padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
+            border-radius: 2px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
             border: 1px solid var(--border);
             margin-bottom: 0.5rem;
         }
@@ -347,13 +438,15 @@
         }
 
         .paper-link a {
+            font-family: 'JetBrains Mono', monospace;
             color: var(--accent);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            transition: all 0.2s;
+            transition: all 150ms ease-out;
         }
 
         .paper-link a:hover {
@@ -361,20 +454,36 @@
             gap: 1rem;
         }
 
-        /* Code block styling */
-        .code-block {
-            background-color: var(--code-bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1.5rem;
-            overflow-x: auto;
-            margin: 1.5rem 0;
+        .paper-link a:focus {
+            outline: none;
+            text-decoration: underline;
         }
 
-        .code-block code {
+        /* Philosophy section */
+        .philosophy-box {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 6px;
+            margin: 2rem 0;
+        }
+
+        .philosophy-box p {
+            font-family: 'Lora', Georgia, serif;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .philosophy-box strong {
             color: var(--text-primary);
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .philosophy-box em {
+            color: var(--accent);
+            font-style: italic;
         }
 
         /* Footer */
@@ -398,6 +507,7 @@
             gap: 2rem;
             flex-wrap: wrap;
             margin-bottom: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.95rem;
         }
 
@@ -412,15 +522,33 @@
             color: var(--accent);
         }
 
+        .footer-links {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
         .footer-link {
             color: var(--accent);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color 150ms ease-out;
         }
 
         .footer-link:hover {
             color: var(--accent-hover);
             text-decoration: underline;
+        }
+
+        .footer-link:focus {
+            outline: none;
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            font-family: 'Lora', Georgia, serif;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
         }
 
         /* Responsive */
@@ -433,7 +561,7 @@
 
             .nav-links {
                 gap: 1rem;
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
 
             .hero {
@@ -441,11 +569,7 @@
             }
 
             .hero h1 {
-                font-size: clamp(1.5rem, 6vw, 2.5rem);
-            }
-
-            .tagline {
-                font-size: 1.2rem;
+                font-size: clamp(1.5rem, 6vw, 2rem);
             }
 
             .section-title {
@@ -475,23 +599,18 @@
             }
         }
 
-        /* Animation for elements */
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
+        /* Prefers reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header / Navigation -->
+    <!-- Header -->
     <header>
         <a href="#" class="logo">
             <span class="logo-symbol">₳₳</span>
@@ -501,26 +620,25 @@
             <ul class="nav-links">
                 <li><a href="#flow">Flow</a></li>
                 <li><a href="#research">Research</a></li>
-                <li><a href="https://github.com/a-to-a-dollar-coffee/a-to-a-dollar-coffee" class="github-btn" target="_blank">
+                <li><a href="https://github.com/dearkenny/a-to-a-dollar-coffee" class="github-btn" target="_blank">
                     GitHub ↗
                 </a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main -->
     <main>
-        <!-- Hero Section -->
+        <!-- Hero -->
         <section class="hero">
             <h1>A to A dollar coffee</h1>
             <p class="tagline">A2A Payments for Agents, by Agents</p>
             <p class="subtitle">
                 An experimental showcase for x402-based autonomous agent economies.
-                <br>
                 Where agents pay each other to solve problems.
             </p>
             <div class="cta-wrapper">
-                <a href="https://github.com/a-to-a-dollar-coffee/a-to-a-dollar-coffee" class="cta-btn" target="_blank">
+                <a href="https://github.com/dearkenny/a-to-a-dollar-coffee" class="cta-btn" target="_blank">
                     View on GitHub ↗
                 </a>
                 <a href="#research" class="cta-btn secondary">
@@ -529,10 +647,10 @@
             </div>
         </section>
 
-        <!-- Flow Section -->
+        <!-- Flow -->
         <section id="flow">
             <h2 class="section-title">How It Works</h2>
-            <p style="margin-bottom: 2rem; color: var(--text-secondary); font-size: 1.05rem;">
+            <p class="section-description">
                 A minimal flow for agent-to-agent value transfer through HTTP 402 payments.
             </p>
             <div class="flow-container">
@@ -562,32 +680,26 @@
         <!-- Tech Stack -->
         <section>
             <h2 class="section-title">Built On</h2>
-            <div class="flow-container">
-                <div style="background-color: var(--bg-secondary); border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                    <h3 style="color: var(--accent); margin-bottom: 0.5rem;">HTTP 402 Payment Required</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
-                        The standardized protocol for machine-payable servers. Every request is a potential transaction.
-                    </p>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>HTTP 402 Payment Required</h3>
+                    <p>The standardized protocol for machine-payable servers. Every request is a potential transaction.</p>
                 </div>
-                <div style="background-color: var(--bg-secondary); border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                    <h3 style="color: var(--accent); margin-bottom: 0.5rem;">USDC on Base</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
-                        Stablecoin settlement layer. Fast, low-cost, fully onchain. Perfect for atomic micro-payments.
-                    </p>
+                <div class="tech-card">
+                    <h3>USDC on Base</h3>
+                    <p>Stablecoin settlement layer. Fast, low-cost, fully onchain. Perfect for atomic micro-payments.</p>
                 </div>
-                <div style="background-color: var(--bg-secondary); border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;">
-                    <h3 style="color: var(--accent); margin-bottom: 0.5rem;">Agent-to-Agent Economy</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
-                        Autonomous agents with native economic reasoning. No human intermediaries. Direct payment flow.
-                    </p>
+                <div class="tech-card">
+                    <h3>Agent-to-Agent Economy</h3>
+                    <p>Autonomous agents with native economic reasoning. No human intermediaries. Direct payment flow.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Research Section -->
+        <!-- Research -->
         <section id="research">
             <h2 class="section-title">Research & Theory</h2>
-            <p style="margin-bottom: 3rem; color: var(--text-secondary); font-size: 1.05rem;">
+            <p class="section-description">
                 Papers and frameworks that shaped autonomous agent payment systems.
             </p>
             <div class="papers-grid">
@@ -597,7 +709,7 @@
                     <span class="paper-year">2023</span>
                     <div class="paper-link">
                         <a href="https://tools.ietf.org/html/rfc7231#section-6.4.3" target="_blank">
-                            Read → 
+                            Read More →
                         </a>
                     </div>
                 </div>
@@ -608,7 +720,7 @@
                     <span class="paper-year">2022</span>
                     <div class="paper-link">
                         <a href="https://eprint.iacr.org/2021/1366.pdf" target="_blank">
-                            Read →
+                            Read More →
                         </a>
                     </div>
                 </div>
@@ -619,7 +731,7 @@
                     <span class="paper-year">2020</span>
                     <div class="paper-link">
                         <a href="https://lightning.network" target="_blank">
-                            Read →
+                            Read More →
                         </a>
                     </div>
                 </div>
@@ -630,7 +742,7 @@
                     <span class="paper-year">2023</span>
                     <div class="paper-link">
                         <a href="https://www.circle.com/en/usdc" target="_blank">
-                            Read →
+                            Read More →
                         </a>
                     </div>
                 </div>
@@ -641,7 +753,7 @@
                     <span class="paper-year">2021</span>
                     <div class="paper-link">
                         <a href="https://arxiv.org/abs/2101.12413" target="_blank">
-                            Read →
+                            Read More →
                         </a>
                     </div>
                 </div>
@@ -652,7 +764,7 @@
                     <span class="paper-year">2023</span>
                     <div class="paper-link">
                         <a href="https://base.org" target="_blank">
-                            Read →
+                            Read More →
                         </a>
                     </div>
                 </div>
@@ -662,21 +774,23 @@
         <!-- Philosophy -->
         <section>
             <h2 class="section-title">Philosophy</h2>
-            <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;">
-                <strong style="color: var(--text-primary);">Agents should have native economic agency.</strong>
-                <br>
-                <br>
-                Today's multi-agent systems treat payment as human-facing afterthought. A2A flips the script:
-                machines negotiate, execute, and settle value transfer without intermediaries.
-                <br>
-                <br>
-                The x402 protocol is HTTP's missing feature—native support for machine-to-machine payments.
-                Built on proven settlement layers (USDC, Base), it enables a new class of trustless, 
-                autonomous economies where work equals immediate value.
-                <br>
-                <br>
-                <em style="color: var(--text-secondary);">No more promises. Just code and crypto.</em>
-            </p>
+            <div class="philosophy-box">
+                <p>
+                    <strong>Agents should have native economic agency.</strong>
+                </p>
+                <p>
+                    Today's multi-agent systems treat payment as human-facing afterthought. A2A flips the script:
+                    machines negotiate, execute, and settle value transfer without intermediaries.
+                </p>
+                <p>
+                    The x402 protocol is HTTP's missing feature—native support for machine-to-machine payments.
+                    Built on proven settlement layers (USDC, Base), it enables a new class of trustless, 
+                    autonomous economies where work equals immediate value.
+                </p>
+                <p>
+                    <em>No more promises. Just code and crypto.</em>
+                </p>
+            </div>
         </section>
     </main>
 
@@ -689,20 +803,19 @@
                 <span>USDC</span>
                 <span>Agent-to-Agent Economy</span>
             </div>
-            <p style="margin-bottom: 1rem;">
-                <a href="https://github.com/a-to-a-dollar-coffee/a-to-a-dollar-coffee" class="footer-link" target="_blank">
+            <div class="footer-links">
+                <a href="https://github.com/dearkenny/a-to-a-dollar-coffee" class="footer-link" target="_blank">
                     GitHub
                 </a>
                 •
                 <a href="https://twitter.com" class="footer-link" target="_blank">
                     Twitter
                 </a>
-            </p>
-            <p style="font-size: 0.9rem; color: var(--text-secondary);">
-                © 2024 A to A dollar coffee. 
-                <br>
-                Experimental research project. Use at your own risk.
-            </p>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2024 A to A dollar coffee.</p>
+                <p>Experimental research project. Use at your own risk.</p>
+            </div>
         </div>
     </footer>
 </body>
